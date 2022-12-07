@@ -20,7 +20,10 @@ interface IHistoryData {
 const Chart = ({ coinId }: ChartProp) => {
   const { isLoading, data } = useQuery<IHistoryData[]>(
     ["coin-history", coinId],
-    () => fetchCoinHistory(coinId)
+    () => fetchCoinHistory(coinId),
+    {
+      refetchInterval: 10000,
+    }
   );
   return (
     <div>
@@ -31,13 +34,43 @@ const Chart = ({ coinId }: ChartProp) => {
           type="line"
           series={[
             {
-              name: "close",
+              name: "Close Price",
               data: data?.map((price) => Number(price.close)) as number[],
             },
           ]}
           options={{
             theme: { mode: "dark" },
-            chart: { height: 500, width: 500 },
+            chart: {
+              height: 500,
+              width: 500,
+              toolbar: { show: false },
+              background: "transparent",
+            },
+            grid: {
+              show: false,
+            },
+            stroke: { curve: "stepline", width: 3 },
+            yaxis: {
+              show: false,
+            },
+            xaxis: {
+              labels: {
+                show: false,
+              },
+              categories: data?.map((p) =>
+                new Date(p.time_close * 1000).toUTCString()
+              ),
+            },
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+              y: {
+                formatter: (value) => `${value.toFixed(2)}`,
+              },
+            },
           }}
         />
       )}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -84,8 +84,11 @@ const Coins = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Coins</title>
+      </Helmet>
       <Header>
-        <Title> Coin </Title>
+        <Title>Coin</Title>
       </Header>
       {isLoading ? (
         <Loader>"Loading"</Loader>

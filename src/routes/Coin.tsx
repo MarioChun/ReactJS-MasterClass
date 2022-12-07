@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 import {
   Link,
   Route,
@@ -163,7 +164,10 @@ const Coin = () => {
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<IPriceInfo>(
     ["price", coinId],
-    () => fetchCoinPriceInfo(coinId)
+    () => fetchCoinPriceInfo(coinId),
+    {
+      refetchInterval: 5000,
+    }
   );
   // const [loading, setLoading] = useState(true);
   // const [info, setInfo] = useState<IInfo>();
@@ -187,6 +191,11 @@ const Coin = () => {
   const loading = infoLoading || priceLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -206,8 +215,8 @@ const Coin = () => {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>${priceData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
