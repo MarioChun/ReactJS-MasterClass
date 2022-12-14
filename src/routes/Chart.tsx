@@ -49,7 +49,7 @@ const Chart = ({ coinId }: ChartProp) => {
             grid: {
               show: false,
             },
-            stroke: { curve: "stepline", width: 3 },
+            stroke: { curve: "smooth", width: 4 },
             yaxis: {
               show: false,
             },

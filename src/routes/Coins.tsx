@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { fetchCoins } from "../api";
 
 const Container = styled.div`
-  padding: 0px 2 0px;
+  padding: 0px 20px;
 
   //화면 크기가 변해도 동적으로 보이게끔
   max-width: 480px;
@@ -22,11 +22,11 @@ const Header = styled.div`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${(p) => p.theme.bgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
   margin-bottom: 10px;
-
   border-radius: 15px;
+  border: 1px solid white;
   a {
     padding: 20px;
     display: flex; //글씨 밖에까지 클릭할수 있게끔
